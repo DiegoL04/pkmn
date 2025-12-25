@@ -4,7 +4,7 @@ const output = document.getElementById("output");
 
 const randomBtn = document.getElementById("random-btn");
 randomBtn.addEventListener("click", async () => {
-  const randomId = await getRandomInt(1026, 1196); // total Pokémon count
+  const randomId = await getRandomInt(1, 1196); // total Pokémon count
   console.log("Generated ID:", randomId);
   if(randomId > 1025){
         const altForms = {
