@@ -4,6 +4,7 @@ export function normalizeName(name) {
     name = name.toLowerCase()
     .replace(/[-_.]/g, " ")
     .replace(/\s+/g, " ")
+    .replace("%", "")
     .trim();
 
     let arrayName = name.split(" ");
@@ -38,7 +39,15 @@ function formatName(name) {
       {
         let temp = arrayName.pop();
         arrayName.unshift(temp);
-      }else
+      }else if(arrayName.includes("minior") && arrayName.includes("meteor")){// Minior Meteor Clause
+          let temp = arrayName.pop();
+          arrayName[1] = temp;
+          console.log(arrayName)
+      }else if(arrayName.includes("minior") && !(arrayName.includes("meteor")))// Minior Core Clause
+        {
+          arrayName[1] = "core";
+          console.log(arrayName)
+        }else
         {
           arrayName.push(arrayName[0]);
           arrayName.shift();
@@ -75,8 +84,14 @@ export function answerName(name) {
   for (let i = 0; i < arrayName.length; i++) {
     arrayName[i] = arrayName[i].charAt(0).toUpperCase() + arrayName[i].slice(1);
   }
-  arrayName[arrayName.length - 1] = "(" + arrayName[arrayName.length - 1] + ")";
-  arrayName = arrayName.join(" ");
+  if(arrayName.length !== 1)
+  {
+    if(!arrayName.includes("Galarian") && !arrayName.includes("Alolan") && !arrayName.includes("Hisuian") && !arrayName.includes("Paldean") && !arrayName.includes("Mega") && !arrayName.includes("Primal") && !arrayName.includes("Female"))
+      {
+    arrayName[arrayName.length - 1] = "(" + arrayName[arrayName.length - 1] + ")";
+      }
+    arrayName = arrayName.join(" ");
+  }
   return arrayName;
 }
 
@@ -102,6 +117,17 @@ export function answerToggle(name) {
   const displayName = document.getElementById("displayName");
   displayName.innerText = name;
   displayName.style.display = "block";
+}
+
+export function answerResponse(isCorrect){
+  const response = document.getElementById("guessResponse");
+  if(isCorrect){
+    response.innerText = "Correct!";
+    response.style.display = "block";
+    return;
+  }
+  response.innerText = "Incorrect! Try again!";
+  response.style.display = "block";
 }
 
 export function submitGuess() {
